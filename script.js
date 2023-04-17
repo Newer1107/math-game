@@ -112,8 +112,6 @@ function generateQuestion() {
   options[i].addEventListener("click", selectOption);
   }
   }
-  var scoresRef = db.ref('scores');
-  var childRef = scoresRef.child('childNode');
   
   // Define function to handle option selection
   function selectOption() {
@@ -128,25 +126,10 @@ function generateQuestion() {
       var name = prompt("Please enter your name:");
       if (name != null && name.trim() != "") {
         var database = firebase.database();
-        var scoresRef = db.ref('scores');
-        scoresRef.orderByChild('name').equalTo(name.trim()).once('value', function(snapshot) {
-          if (snapshot.exists()) {
-            // Update score for existing user
-            snapshot.forEach(function(childSnapshot) {
-              var key = childSnapshot.key;
-              var childData = childSnapshot.val();
-              scoresRef.child(key).update({
-                score: childData.score + score
-              });
-            });
-          } else {
-            // Add new entry for new user
-            scoresRef.push({
-              name: name.trim(),
-              score: score,
-              timestamp: Date.now()
-            });
-          }
+        database.ref('scores').push({
+          name: name.trim(),
+          score: score,
+          timestamp: Date.now()
         });
       }
       
