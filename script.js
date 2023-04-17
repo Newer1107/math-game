@@ -112,7 +112,8 @@ function generateQuestion() {
   options[i].addEventListener("click", selectOption);
   }
   }
-  
+  var scoresRef = database.ref('scores');
+  var childRef = scoresRef.child('childNode');
   // Define function to handle option selection
   function selectOption() {
     // Check if selected option is correct
