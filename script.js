@@ -128,7 +128,7 @@ function generateQuestion() {
       var name = prompt("Please enter your name:");
       if (name != null && name.trim() != "") {
         var database = firebase.database();
-        var scoresRef = database.ref('scores');
+        var scoresRef = db.ref('scores');
         scoresRef.orderByChild('name').equalTo(name.trim()).once('value', function(snapshot) {
           if (snapshot.exists()) {
             // Update score for existing user
